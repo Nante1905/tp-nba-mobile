@@ -1,0 +1,7 @@
+{
+  "name": "tp-nba-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
