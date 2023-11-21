@@ -13,6 +13,7 @@ import {
   useIonViewWillEnter
 } from '@ionic/react';
 import './Home.css';
+import Equipe from './equipe/Equipe';
 
 const Home: React.FC = () => {
 
@@ -31,27 +32,13 @@ const Home: React.FC = () => {
 
   return (
     <IonPage id="home-page">
-      <IonHeader>
+      {/* <IonHeader>
         <IonToolbar>
           <IonTitle>Inbox</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent fullscreen>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
-
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">
-              Inbox
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonList>
-          {messages.map(m => <MessageListItem key={m.id} message={m} />)}
-        </IonList>
+        <Equipe/>
       </IonContent>
     </IonPage>
   );
