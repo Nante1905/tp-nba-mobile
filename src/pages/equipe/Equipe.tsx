@@ -1,65 +1,67 @@
 import {
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-  } from "@mui/material";
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import { apiUrl } from "../../env";
 
-  const Equipe = ()=>{
-    return(
-        <div className="tab">
-        <TableContainer>
-          <Table aria-label="simple table">
+interface Equipe {
+  id: number;
+  nom: string;
+}
 
-            <TableHead  className="table-head">
-              <TableRow className="table-row">
-                <TableCell>Nom Equipe</TableCell>
+const Equipe = () => {
+  const [equipes, setEquipes] = useState<Equipe[]>([]);
+
+  const params = useParams<any>();
+
+  useEffect(() => {
+    console.log("fetching equipe");
+    axios
+      .get(`${apiUrl}/equipes`)
+      .then((res) => {
+        console.log(res);
+        setEquipes(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <div className="tab">
+      <h1
+        style={{
+          textAlign: "center",
+        }}
+      >
+        Liste des equipes
+      </h1>
+      <TableContainer>
+        <Table aria-label="simple table">
+          <TableBody>
+            {equipes.map((e) => (
+              <TableRow>
+                <TableCell>{e.nom}</TableCell>
                 <TableCell>
-                    
+                  <Link to={`/equipes/${e.id}/stats`}>
+                    <Button className="details" variant="contained">
+                      Voir Statistique
+                    </Button>
+                  </Link>
                 </TableCell>
-
-                
-
               </TableRow>
-            </TableHead>
-            <TableBody>
-                    <TableRow>
-                        <TableCell>Equipe1</TableCell>
-                        <TableCell>
-                            <Button variant="contained">
-                                Voir Statistique
-                            </Button>
-                        </TableCell>
-                        
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Equipe2</TableCell>
-                        <TableCell>
-                            <Button variant="contained">
-                                Voir Statistique
-                            </Button>
-                        </TableCell>
-                        
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Equipe3</TableCell>
-                        <TableCell>
-                            <Button variant="contained">
-                                Voir Statistique
-                            </Button>
-                        </TableCell>
-                        
-                    </TableRow>
-                </TableBody>
-                
-          </Table>
-        </TableContainer>
-        </div>
-    );
-  };
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
+};
 
-  export default Equipe;
-
+export default Equipe;
